@@ -21,7 +21,6 @@ Sub Class_Globals
 	Private ScrollPane1 As ScrollPane
 	Private CustomListView1 As CustomListView
 	Private DragSceneY As Double
-	Private SBV As JavaObject
 End Sub
 
 Public Sub Initialize
@@ -64,9 +63,6 @@ Private Sub EnableDragScroll (clv As CustomListView)
     AddEventFilter(spJO, "MOUSE_PRESSED", "SPPressed")
     AddEventFilter(spJO, "MOUSE_RELEASED", "SPReleased")
     AddEventFilter(spJO, "MOUSE_DRAGGED", "SPDragged")
-	'Cache the vertical scrollbar for later calculations
-    Sleep(0) ' wait for UI to build
-    SBV = GetScrollBar(spJO, "VERTICAL")
 End Sub
 
 ' Utility to attach JavaFX event filters
@@ -107,7 +103,7 @@ Private Sub SPDragged_Event (MethodName As String, Args() As Object)
     Dim Event As JavaObject = Args(0)
     Dim ThisY As Double = Event.RunMethod("getY", Null)
     Dim contentHeight As Double = SP.InnerNode.PrefHeight
-    Dim visibleHeight As Double = SBV.RunMethod("getVisibleAmount", Null) * contentHeight
+    Dim visibleHeight As Double = GetScrollBar(CustomListView1.sv, "VERTICAL").RunMethod("getVisibleAmount", Null) * contentHeight
     SP.VPosition = SP.VPosition + (DragSceneY - ThisY) / (contentHeight - visibleHeight)
     DragSceneY = ThisY
 End Sub
