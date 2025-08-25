@@ -103,7 +103,7 @@ Private Sub SPDragged_Event (MethodName As String, Args() As Object)
     Dim Event As JavaObject = Args(0)
     Dim ThisY As Double = Event.RunMethod("getY", Null)
     Dim contentHeight As Double = SP.InnerNode.PrefHeight
-    Dim visibleHeight As Double = GetScrollBar(CustomListView1.sv, "VERTICAL").RunMethod("getVisibleAmount", Null) * contentHeight
+    Dim visibleHeight As Double = GetScrollBar(SP, "VERTICAL").RunMethod("getVisibleAmount", Null) * contentHeight
     SP.VPosition = SP.VPosition + (DragSceneY - ThisY) / (contentHeight - visibleHeight)
     DragSceneY = ThisY
 End Sub
