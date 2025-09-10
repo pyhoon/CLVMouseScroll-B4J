@@ -98,10 +98,10 @@ Private Sub SPReleased_Event (MethodName As String, Args() As Object)
 End Sub
 
 Private Sub SPDragged_Event (MethodName As String, Args() As Object)
-    Dim SP As ScrollPane = Sender
-    SP.MouseCursor = fx.Cursors.MOVE
     Dim Event As JavaObject = Args(0)
     Dim ThisY As Double = Event.RunMethod("getY", Null)
+    Dim SP As ScrollPane = Sender
+    SP.MouseCursor = fx.Cursors.MOVE
     Dim contentHeight As Double = SP.InnerNode.PrefHeight
     Dim visibleHeight As Double = GetScrollBar(SP, "VERTICAL").RunMethod("getVisibleAmount", Null) * contentHeight
     SP.VPosition = SP.VPosition + (DragSceneY - ThisY) / (contentHeight - visibleHeight)
